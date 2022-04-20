@@ -10,30 +10,52 @@ library(testthat)
 ```
 
 <!--
- You need to run the 'description' chunk in the '0-dev_history.Rmd' file before continuing your code there.
+You need to run the 'description' chunk in the '0-dev_history.Rmd' file before continuing your code there.
 -->
 
-# My function
+# Get number of packages on CRAN at a given date
 
 ```{r function-my_fun}
-#' my_fun Title
+#' Get number of packages on CRAN at a given date
+#' 
+#' Query MRAN to Get number of packages on CRAN at a given date.
+#' MRAN -> Microsoft snapshots of CRAN.
 #'
-#' @return 1
+#' @param date A character string representing a date of the form yyyy-mm-dd.
+#'
+#' @return A data.frame with 2 columns `date` and `n` the number of packages on CRAN
+#' at that date.
+#' 
 #' @export
-#'
+#' @importFrom utils available.packages 
+#' 
 #' @examples
-my_fun <- function() {
-  1
+cranology <- function(date) {
+  data.frame(
+    date = date,
+    n = nrow(
+      available.packages(
+        repos = sprintf("https://mran.microsoft.com/snapshot/%s", date)
+      )
+    )
+  )
 }
 ```
 
 ```{r examples-my_fun}
-my_fun()
+cranology("2020-03-15")
 ```
 
 ```{r tests-my_fun}
-test_that("my_fun works", {
-
+test_that("cranology works", {
+  result <- cranology("2020-03-15")
+  # generated with dput()
+  expected_df <- structure(
+    list(date = "2020-03-15", n = 15367L),
+    class = "data.frame",
+    row.names = c(NA, -1L)
+  )
+  expect_equal(result, expected_df)
 })
 ```
 
