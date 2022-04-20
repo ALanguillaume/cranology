@@ -1,0 +1,13 @@
+Package: cranology
+Version: 0.0.0.9000
+Title: Explore CRAN History
+Description: Explore CRAN packages number by date.
+Authors@R: person(given = "Antoine",
+       family = "Languillaume",
+       role = c("aut", "cre"),
+       email = "antoine@thinkr.fr",
+       comment = c(ORCID = "0000-0002-1565-9313"))
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
